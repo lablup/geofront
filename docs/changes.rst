@@ -6,6 +6,19 @@ Version 0.5.0
 
 To be released.
 
+- Geofront now supports access to servers inside remote private networks
+  via SSH tunneling over an HTTP WebSocket.  [:issue:`21`]
+
+  - Added ``addresser`` and ``filter`` options to :class:`CloudRemoteSet
+    <geofront.backends.cloud.CloudRemoteSet>` constructor, which allow
+    customization of server addressing and filtering schemes.  The default
+    is still to use public IPs, so you would wish to give lambda functions that
+    return private IPs from the :class:`libcloud.compute.base.Node` object
+    for use with SSH tunneling.
+  - Removed ``--trusted-proxy`` option from the :program:`geofront-server`
+    command.
+  - Known issue: the WebSocket endpoints do not work in the debug mode.
+
 - Geofront now supports Docker-based deployment.
 
   - Added shortcut factory functions for classes in
@@ -15,6 +28,11 @@ To be released.
     to accept string database module names for use in environment-variable
     configuration.
   - Added example configurations for nginx and docker-compose.
+
+- Geofront becomes to require gevent 1.1.2 or higher.
+- Geofront becomes to require Flask-Sockets 0.2.1 or higher.
+- Geofront becomes not to require waitress any more.
+
 
 Version 0.4.1
 -------------
@@ -227,9 +245,8 @@ Released on April 22, 2014.
 
 - Fixed :exc:`TypeError` that rises when :class:`CloudMasterKeyStore
   <geofront.backends.cloud.CloudMasterKeyStore>` is used with AWS S3 driver.
-- Added :option:`--trusted-proxy <geofront-server --trusted-proxy>` option
-  to :program:`geofront-server` command.  It's useful when the server is
-  run behind a reverse proxy.
+- Added ``--trusted-proxy`` option to :program:`geofront-server` command.  It's
+  useful when the server is run behind a reverse proxy.
 - Added token no-op API: :http:get:`/tokens/(token_id:token_id)/`.
 
 
